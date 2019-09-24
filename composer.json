@@ -2,14 +2,23 @@
     "name":"php-tamtam-bot-api/dependencies",
     "type": "library",
     "description": "Api Dependencies",
+
     "keywords": ["tamtam", "bot", "api"],
     "homepage": "https://github.com/infinite4evr/php-tamtam-bot-api",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Ashu",
+            "email": "ggs.sudhanshu@gmail.com",
+            "homepage": "https://infinite4evr.com",
+            "role": "I don't know yet"
+        }
+    ],
     "require": {
          "monolog/monolog" : "2.*",
          "php": "^5.5|^7.0",
          "ext-curl": "*",
-        "ext-json": "*"
+         "ext-json": "*"
 
     },
     "config": {

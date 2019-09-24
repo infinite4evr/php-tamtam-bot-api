@@ -1,8 +1,12 @@
 <?php
 
+/**
+ * TamTam Error Logger Class *
+ * @author Ashu (github.com/infinite4evr) <ggs.sudhanshu@gmail.com>
+ */
+
 require_once(dirname(__FILE__).'/vendor/autoload.php');
 use monolog\monolog;
-
 
 class Tamtam
 {
@@ -14,9 +18,9 @@ class Tamtam
   private $errorLogging;
 
   /*
-  parameters 
-  $bot_token  -> Bot Token
-  $errorLogging -> Bool[T/F] ( have to log error or not ) Default = true
+  * parameters :
+  *  $bot_token  -> Bot Token
+  *  $errorLogging -> Bool[T/F] ( have to log error or not ) Default = true
   */
   public function __construct($bot_token, $errorLogging = true)
   {
@@ -24,32 +28,49 @@ class Tamtam
       $this->$errorLogging = $errorLogging;
 
   }
-  
-  /* 
-  API Endpoint
-  parmeters 
-  $apiMethod -> api method to call in request
-  $content -> user content for message
-  $method -> request method get/post/patch, default == post
+  /**
+   *  return the HTTP 200 to TamTam
   */
-  public function endpoint($apiMethod, $content, $method = 'POST')
+  public function respondSuccess()
   {
-      $url = 'https://'.$this->$apiDomain.'/'.$apiMethod.'?access_token='.$bot_token.'?';
+      http_response_code(200);
+      return json_encode(['status' => 'success']);
+  }
+  
+  /**
+  * API Endpoint
+  * parmeters : 
+  *   apiMethod -> api method to call in request
+  *   content -> user content for message
+  *   method -> request method get/post/patch, default == post
+  * query parameter is array of parameters which are to sent in header
+  * rest other parameters in content will be encoded as json and sent as request body
+  *
+  */
+  public function endpoint($apiMethod, $content, $method = 'POST', array $queryParameters = null)
+  {
+      $url = 'https://'.$this->$apiDomain.'/'.$apiMethod.'?access_token='.$bot_token;
+      if($queryParameters!=null){
+          foreach($queryParameters as $parameter){
+              $url = $url."&$parameter=".$content[$parameter];
+              unset($content[$parameter]);
+          }
+      }
       $reply = $this->callAPI($method,$url,$content);
       return json_decode($reply, true);
   }
   /*
   API Endpoint
-  parmeters 
-  $method -> request method get/post/patch, default == post
-  $data -> user content for message
-  $url -> full url with endpoint concatenated
+  parmeters :
+    $method -> request method get/post/patch, default == post
+    $data -> user content for message
+    $url -> full url with endpoint concatenated
   */
 
   private function callAPI($method, $url, $data)
   {
     $curl = curl_init();
- 
+    $data = json_encode($data);
     switch ($method){
        case "POST":
           curl_setopt($curl, CURLOPT_POST, 1);
@@ -80,6 +101,10 @@ class Tamtam
           if ($data)
              $url = sprintf("%s?%s", $url, http_build_query($data));
     }
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data))
+    );
  
     // OPTIONS:
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -107,7 +132,8 @@ class Tamtam
  }
  /*
  Description : Edits current bot info. Fill only the fields you want to update. All remaining fields will stay untouched
- parameters : $content
+ parameters of :
+    $content (array)
         Name         |   Type     | Required/Optional
         name         |   string   |    optional
         username     |   string   |    optional
@@ -117,131 +143,146 @@ class Tamtam
  For full info : https://dev.tamtam.chat/#operation/editMyInfo
  */
 
- public function editMyInfo($content)
+ public function editMyInfo(array $content)
  {
+     $queryParameters = null ;
      return $this->endpoint('me', $content, 'PATCH');
  }
  /*
- Description : eturns info about chats that bot participated in: a result list and marker points to the next page
- parameters : $content
+ Description : returns info about chats that bot participated in: a result list and marker points to the next page
+ parameters of :
+   $content (array)
         Name         |   Type     | Required/Optional
         count        |   int      |    optional
         marker       |   int      |    optional
  For full info : https://dev.tamtam.chat/#operation/getChats
  */
- public function getChats($content)
+ public function getChats(array $content)
  {
-      return $this->endpoint('chats', $content, 'GET');
+      $queryParameters = ['count', 'marker'];
+      return $this->endpoint('chats/'.$content['chat_id'], $content, 'GET', $queryParameters);
  }
  /*
  Description : Returns info about chat
- parameters : $content
+ parameters of : 
+    $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    required
  For full info : https://dev.tamtam.chat/#operation/getChat
  */
- public function getChat($content)
+ public function getChat(array $content)
  {
-     return $this->endpoint('chats', $content, 'GET');
+     return $this->endpoint('chats/'.$content['chatId'], $content, 'GET', null);
  }
  /*
  Description : Edits chat info: title, icon, etc…
- paramters : $content
+ paramters of : 
+    $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    required    
         icon         |   object   |    optional
         title        |   string   |    optional
  For full info : https://dev.tamtam.chat/#operation/editChat
  */
- public function editChat($content)
- {
-     return $this->endpoint('chats', $content, 'PATCH');
+ public function editChat(array $content)
+ {   
+     return $this->endpoint('chats/'.$content['chatId'], $content, 'PATCH', null, );
  }
  /* 
  Description : Send bot action to chat
- parameters : $content
+ parameters of : 
+    $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    required    
         action       |   enum     |    required
  For full info : https://dev.tamtam.chat/#operation/sendAction
  */
- public function sendAction($content)
+ public function sendAction(array $content)
  {
-     return $this->endpoint('chats', $content, 'POST');
+     return $this->endpoint('chats/'.$content['chatId'].'/actions', $content, 'POST', null);
  }
  /*
  Description : Returns chat membership info for current bot
- parameters : $content
+ parameters of :
+   $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    required    
  For full info : https://dev.tamtam.chat/#operation/getMembership
  */
- public function getMembership($content)
+ public function getMembership(array $content)
  {
-     return $this->endpoint('chats', $content, 'GET');
+     return $this->endpoint('chats/'.$content['chatId'].'/members/me', $content, 'GET');
  }
  /*
  Description : Returns chat membership info for current bot
- parameters : $content
+ parameters of :
+    $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    required    
  For full info : https://dev.tamtam.chat/#operation/getMembership
  */
- public function leaveChat($content)
+ public function leaveChat(array $content)
  {
-     return $this->endpoint('chats', $content);
+     return $this->endpoint('chats/'.$content['chatId'].'/members/me', $content, 'DELETE');
  }
  /*
  Description : Removes bot from chat members.
- parameters : $content
+ parameters of :
+   $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    required    
  For full info : https://dev.tamtam.chat/#operation/leaveChat
  */
- public function getAdmins($content)
+ public function getAdmins(array $content)
  {
-     return $this->endpoint('chats', $content, 'GET');
+     return $this->endpoint('chats/'.$content['chatID'].'/members/admins', $content, 'GET');
  }
  /*
  Description : Returns users participated in chat.
- parameters : $content
+ parameters of :
+   $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    optional
         user_ids     |   array    |    optional
         marker       |   int      |    optional   
  For full info :https://dev.tamtam.chat/#operation/getMembers
  */ 
- public function getMembers($content)
+ public function getMembers(array $content)
  {
-     return $this->endpoint('chats', $content, 'GET');
+     $queryParameters = ['user_ids', 'marker', 'count'];
+     return $this->endpoint('chats/'.$content['chatId'].'/members', $content, 'GET', $queryParameters);
  }
  /*
  Description : Adds members to chat. Additional permissions may require.
- parameters : $content
+ parameters of :
+   $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    optional
         user_ids     |   array    |    required 
  For full info :https://dev.tamtam.chat/#operation/addMembers
  */
- public function addMembers($content)
+ public function addMembers(array $content)
  {
-     return $this->endpoint('chats', $content, 'POST');
+     return $this->endpoint('chats/'.$content['chatId'].'/members', $content, 'POST');
  }
  /*
  Description : Removes member from chat. Additional permissions may require.
- parameters : $content
+ parameters of : 
+   $content(array)
         Name         |   Type     | Required/Optional
         chatId       |   int      |    optional
         user_id      |   int      |    required 
  For full info :https://dev.tamtam.chat/#operation/removeMember
  */
- public function removeMember($content)
+ public function removeMember(array $content)
  {
-     return $this->endpoint('chats', $content, 'DELETE');
+     $queryParameters = ['user_id'];
+     return $this->endpoint('chats/'.$content['chatId'].'/members', $content, 'DELETE', $queryParameters);
  }
  /*
  Description : In case your bot gets data via WebHook, the method returns list of all subscriptions
- parameters : $content
+ parameters of : 
+    $content(array)
         Name         |   Type     | Required/Optional
  For full info :https://dev.tamtam.chat/#operation/getSubscriptions
  */
@@ -251,42 +292,48 @@ class Tamtam
  }
  /*
  Description : Subscribes bot to receive updates via WebHook. After calling this method, the bot will receive notifications about new events in chat rooms at the specified URL.\n\nYour server **must** be listening on one of the following ports: **80, 8080, 443, 8443, 16384-32383**
- parameters : $content
+ parameters of :
+   $content(array)
         Name         |   Type     | Required/Optional
         url          |   string   | required
         update_types |   array    | optional
         version      |   string   | optional
  For full info :https://dev.tamtam.chat/#operation/subscribe
  */
- public function subscribe($content)
+ public function subscribe(array $content)
  {
      return $this->endpoint('subscriptions', $content, 'POST');
  }
  /*
  Description : Unsubscribes bot from receiving updates via WebHook. After calling the method, the bot stops receiving notifications about new events. Notification via the long-poll API becomes available for the bot
- parameters : $content
+ parameters of : 
+   $content(array)
         Name         |   Type     | Required/Optional
         url          |   string   | required
  For full info :https://dev.tamtam.chat/#operation/unsubscribe
  */ 
- public function usubscribe($content)
+ public function unsubscribe(array $content)
  {
-     return $this->endpoint('subscription', $content, 'DELETE');
+     $queryParameters = ['url'];
+     return $this->endpoint('subscription', $content, 'DELETE', $queryParameters);
  }
  /*
  Description : Returns the URL for the subsequent file upload.\n\nFor example, you can upload it via curl:\n\n```curl -i -X POST\n  -H \"Content-Type: multipart/form-data\"\n  -F \"data=@movie.mp4\" \"%UPLOAD_URL%\"```\n\nTwo types of an upload are supported:\n- single request upload (multipart request)\n- and resumable upload.\n\n##### Multipart upload\nThis type of upload is a simpler one but it is less\nreliable and agile. If a `Content-Type`: multipart/form-data header is passed in a request our service indicates\nupload type as a simple single request upload.\n\nThis type of an upload has some restrictions:\n\n- Max. file size - 2 Gb\n- Only one file per request can be uploaded\n- No possibility to restart stopped / failed upload\n\n##### Resumable upload\nIf `Content-Type` header value is not equal to `multipart/form-data` our service indicated upload type\nas a resumable upload.\nWith a `Content-Range` header current file chunk range and complete file size\ncan be passed. If a network error has happened or upload was stopped you can continue to upload a file from\nthe last successfully uploaded file chunk. You can request the last known byte of uploaded file from server\nand continue to upload a file.\n\n##### Get upload status\nTo GET an upload status you simply need to perform HTTP-GET request to a file upload URL.\nOur service will respond with current upload status,\ncomplete file size and last known uploaded byte. This data can be used to complete stopped upload\nif something went wrong. If `REQUESTED_RANGE_NOT_SATISFIABLE` or `INTERNAL_SERVER_ERROR` status was returned\nit is a good point to try to restart an upload
- parameters : $content
+ parameters of : 
+    $content(array)
         Name         |   Type     | Required/Optional
         type         |   Enum     | required
  For full info :https://dev.tamtam.chat/#operation/getUploadUrl
  */ 
- public function getUploadUrl($content)
+ public function getUploadUrl(array $content)
  {
-     return $this->endpoint('uploads', $content, 'POST');
+     $queryParameters = ['type'];
+     return $this->endpoint('uploads', $content, 'POST', $queryParameters);
  }
  /*
  Description :Returns messages in chat: result page and marker referencing to the next page. Messages traversed in reverse direction so the latest message in chat will be first in result array. Therefore if you use `from` and `to` parameters, `to` must be **less than** `from`"
- parameters : $content
+ parameters of : 
+   $content(array)
         Name         |   Type     | Required/Optional
         chat_id      |   int      | optional
         message_ids  |   array    | optional 
@@ -294,8 +341,376 @@ class Tamtam
         to           |   int      | optional
         count        |   int      | required
 
- For full info :https://dev.tamtam.chat/#operation/getUploadUrl
+ For full info :https://dev.tamtam.chat/#operation/getMessages
  */ 
+ public function getMessages(array $content)
+ {
+     $queryParameters = ['chat_id', 'message_ids', 'from', 'to', 'count'];
+     return $this->endpoint('messages', $content, 'GET', $queryParameters);
+ }
+ /*
+ Description :Sends a message to a chat.\nAs a result for this method new message identifier returns.\n### Attaching media\nAttaching media to messages is a three-step process.\n\nAt first step, you should [obtain a URL to upload](#operation/getUploadUrl) your media files.\n\nAt the second, you should upload binary of appropriate format to URL you obtained at the previous step. See [upload](https://dev.tamtam.chat/#operation/getUploadUrl) section for details.\n\nFinally, if the upload process was successful, you will receive JSON-object in a response body.  Use this object to create attachment. Construct an object with two properties:\n- `type` with the value set to appropriate media type\n- and `payload` filled with the JSON you've got.\n\nFor example, you can attach a video to message this way:\n\n1. Get URL to upload. Execute following:\n```shell\ncurl -X POST 'https://botapi.tamtam.chat/uploads?access_token=%access_token%&type=video'\n```\nAs the result it will return URL for the next step.\n```json\n{\n    \"url\": \"http://vu.mycdn.me/upload.do…\"\n}\n```\n\n2. Use this url to upload your binary:\n```shell\ncurl -i -X POST\n  -H \"Content-Type: multipart/form-data\"\n  -F \"data=@movie.mp4\" \"http://vu.mycdn.me/upload.do…\"\n```\nAs the result it will return JSON you can attach to message:\n```json\n  {\n    \"token\": \"_3Rarhcf1PtlMXy8jpgie8Ai_KARnVFYNQTtmIRWNh4\"\n  }\n```\n3. Send message with attach:\n```json\n{\n    \"text\": \"Message with video\",\n    \"attachments\": [\n        {\n            \"type\": \"video\",\n            \"payload\": {\n                \"token\": \"_3Rarhcf1PtlMXy8jpgie8Ai_KARnVFYNQTtmIRWNh4\"\n            }\n        }\n    ]\n}\n```\n\n**Important notice**:\n\nIt may take time for the server to process your file (audio/video or any binary).\nWhile a file is not processed you can't attach it. It means the last step will fail with `400` error.\nTry to send a message again until you'll get a successful result.",
+ parameters of : 
+   $content(array)
+        Name         |   Type     | Required/Optional
+        user_id      |   int      | optional
+        chat_id      |   int      | optional 
+        text         |   int      | optional
+        attachment   |   array    | optional
+        link         |   object   | optional
+        notify       |   boolean  | required
+
+ For full info :https://dev.tamtam.chat/#operation/sendMessage
+ */
+ public function sendMessage(array $content)
+ {
+     $queryParameters = ['user_id', 'chat_id'];
+     return $this->endpoint('messages', $content, 'POST', $queryParameters);
+ }
+ /*
+ Description :Updated message should be sent as `NewMessageBody` in a request body. In case `attachments` field is `null`, the current message attachments won’t be changed. In case of sending an empty list in this field, all attachments will be deleted.
+ parameters  of: 
+   $content(array)
+        Name         |   Type     | Required/Optional
+        message_id   |   int      | required
+        text         |   int      | optional 
+        attachment   |   array    | optional
+        link         |   object   | optional
+        notify       |   boolean  | required
+
+ For full info :https://dev.tamtam.chat/#operation/editMessage
+ */
+ public function editMessage(array $content)
+ {
+     $queryParameters = ['message_id'];
+     return $this->endpoint('messages', $content, 'PUT', $queryParameters);
+ }
+ /*
+ Description :Deletes message in a dialog or in a chat if bot has permission to delete messages.
+ parameters of :
+    $content
+        Name         |   Type     | Required/Optional
+        message_id   |   int      | required
+
+ For full info :https://dev.tamtam.chat/#operation/editMessage
+ */
+ public function deleteMessage(array $content)
+ {
+     $queryParameters = ['message_id'];
+     return $this->endpoint('messages', $content, 'DELETE', $queryParameters);
+ }
+ /*
+ Description :This method should be called to send an answer after a user has clicked the button. The answer may be an updated message or/and a one-time user notification.",
+ parameters of :
+    $content
+        Name         |   Type     | Required/Optional
+        callback_id  |   int      | required
+        message      |   object   | optional
+        notification |   string   | optional
+
+ For full info :https://dev.tamtam.chat/#operation/answerOnCallback
+ */
+ public function answerOnCallback(array $content)
+ {
+     $queryParameters = ['callback_id'];
+     return $this->endpoint('answers', $content, 'POST', $queryParameters);
+ }
+ /*
+ Description :You can use this method for getting updates in case your bot is not subscribed to WebHook. The method is based on long polling.\n\nEvery update has its own sequence number. `marker` property in response points to the next upcoming update.\n\nAll previous updates are considered as *committed* after passing `marker` parameter.\nIf `marker` parameter is **not passed**, your bot will get all updates happened after the last commitment.
+ parameters of :
+    $content
+        Name         |   Type     | Required/Optional
+        limit        |   int      | required
+        timeout      |   int      | optional
+        marker       |   int      | optional
+        types        |   string   | optional
+
+ For full info :https://dev.tamtam.chat/#operation/answerOnCallback
+ */
+ public function getUpdates(array $content)
+ {
+     $queryParameters = ['limit', 'timeout', 'marker', 'types'];
+     return $this->endpoint('updates', $content, 'GET', $queryParameters);
+ }
+
+/*
+ Description : Upload attachments using this function , sendPhoto, sendVideo, sendAudio, sendFile
+ parameters of :
+    $content
+        Name         |   Type     | Required/Optional
+        file         |   string   | required
+
+    function  
+        absolutePath |   bool     | optiona     // default = true //pass when you are sending abolsute path from root 
+
+ Each of the below give functions will return the token of the uploaded file if upload was succesfull or return false
+ */
+ 
+ public function sendPhoto(array $content, bool $absolutePath = true)
+ {
+     $_content = ['type'=> 'photo'];
+     $content['type'] = 'photo';
+     $uploadUrl = $this->getUploadUrl($_content);
+     $result = $this->upload($uploadUrl, $content, $absolutePath);
+     return $result;
+ 
+ }
+
+ public function sendVideo(array $content, bool $absolutePath = true)
+ {
+    $_content = ['type'=> 'video'];
+    $content['type'] = 'video';
+    $uploadUrl = $this->getUploadUrl($_content);
+    $result = $this->upload($uploadUrl, $content, $absolutePath);
+    return $result;
+
+ }
+ public function sendAudio(array $content, bool $absolutePath = true)
+ {
+    $_content = ['type'=> 'audio'];
+    $content['type'] = 'audio';
+    $uploadUrl = $this->getUploadUrl($_content);
+    $result = $this->upload($uploadUrl, $content, $absolutePath);
+    return $result;
+
+ }
+ public function sendFile(array $content, bool $absolutePath = true)
+ {
+    $_content = ['type'=> 'file'];
+    $content['type'] = 'file';
+    $uploadUrl = $this->getUploadUrl($_content);
+    $result = $this->upload($uploadUrl, $content, $absolutePath);
+    return $result;
+ }
+
+ /*
+ Description : Upload main
+ parameters of :
+    $content
+        Name         |   Type     | Required/Optional
+        file         |   string   | required
+        type         |   string   | required
+
+    function  
+        absolutePath |   bool     | optiona     // default = true //pass when you are sending abolsute path from root 
+        uploadUrl    |   string   | required 
+
+ Each of the below give functions will return the token of the uploaded file if upload was succesfull or return false
+ */
+
+ public function upload($uploadUrl, array $content, bool $absolutePath = false)
+ {
+    if($absolutePath!=false){
+        if($absolutePath==true){
+            
+        }else{
+            $this->logError('$absolutePath only accepts bool value in class method upload(), pass either true or false');
+        }        
+    }else {
+        $path = dirname(__FILE__).$content['file'];
+    }
+    $cfile = new CURLFile($path);
+    $cfile->mime = $cfile->getMimeType();
+    $post = array(
+        'file' => $cfile,
+    );
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $uploadUrl);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible;)");
+    curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
+    curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+    $result = curl_exec($ch);
+    $result = json_decode($result, true);
+    if(isset($result['token'])){
+        return $result['token'];
+    }else{
+        return $result;
+    } 
+ }
+ /*
+  downloads a file to the directory provided
+  Params  : 
+    Url : url of the file
+    local_file_path : path where to download the file
+*/ 
+
+ public function downloadFile($url, $local_file_path)
+ {
+     $in = fopen($url, 'rb');
+     $out = fopen($local_file_path, 'wb');
+     while ($chunk = fread($in, 8192)) {
+         fwrite($out, $chunk, 8192);
+     }
+     fclose($in);
+     fclose($out);
+ }
+  /*
+  return a callbackButton object
+  Params  : 
+    text : text visible on button
+    payload : the callback data that will be sent back
+    intent : background color shown on button, default = glass, postive = green, negative = red
+ */ 
+
+ public function buildCallbackButton($text, $payload, $intent = 'default')
+ {
+     $button = [
+         'type' => 'callback',
+         'text' => $text,
+         'payload' => $payload,
+         'intent' => $intent
+        ];
+    return $button;
+ }
+   /*
+  return a linkbutton object
+  Params  : 
+    text : text visible on button
+    link : url of the link
+ */
+ public function buildLinkButton($text, $link)
+ {
+     $button = [
+         'type' => 'link',
+         'text' => $text,
+         'link' => $url
+        ];
+    return $button;
+ }
+ /*
+  return a request_contact object
+  Params  : 
+    text : text visible on button
+ */
+ public function buildRequestContactButton($text)
+ {
+    $button = [
+        'type' => 'request_contact',
+        'text' => $text
+       ];
+   return $button;
+ }
+  /*
+  return a request_gio_location object
+  Params  : 
+    text : text visible on button
+    quick : If true, sends location without asking user's confirmation
+ */
+ public function buildRequestGioLocationButton($text, $quick = false)
+ {
+    $button = [
+        'type' => 'request_gio_location',
+        'text' => $text,
+        'quick' => $quick
+       ];
+   return $button;
+ }
+ /*
+  return a inline_keyboard object
+  Params  : 
+    buttons: array of button objects returned by above functions 
+    
+ */
+
+ public function buildInlineKeyboard(array $buttons)
+ {
+    $buttons = ['buttons' => array($buttons)];
+     $inlineKeyboard = [
+         'type' => 'inline_keyboard',
+         'payload' => $buttons
+     ];
+     return $inlineKeyboard;
+
+ }
+ //pass url to setWebhook
+ public function setWebhook($url, array $update_types = null, $version = null )
+ {
+     $requestBody['url'] = $url;
+     if($update_types!=null){
+         $requestBody['update_types'] = $update_types;
+     }
+     if($version!=null){
+         $requestBody['version'] = $version;
+     }
+    
+    return $this->subscribe($requestBody);
+ }
+
+ // pass the url to delete the webhook
+ public function deleteWebhook($url)
+ {
+     $requestBody['url'] = $url;
+     return $this->unsubscribe($url);
+ }
+ // returns the data fetched ( webhook )
+ public function getData()
+ {
+    if (empty($this->data)) {
+        $rawData = file_get_contents('php://input');
+        return json_decode($rawData, true);
+    } else {
+        return $this->data;
+    }
+}
+ // set your own data
+ public function setData(array $data)
+ {
+    $this->data = $data;
+ }
+ // returns user_id if any
+ public function getSenderUserId()
+ {
+     return $this->data['message']['sender']['user_id'];
+ }
+ //return message text if any exists
+ public function getMessageText()
+ {
+    return $this->data['message']['body']['text'];
+ }
+ // return getRecipientId if any exists
+ public function getRecipientId()
+ {
+     if(isset($this->data['message']['recipient']['chat_id'])){
+         return $this->data['message']['recipient']['chat_id'];
+     }else{
+        return $this->data['message']['recipient']['user_id'];
+     }
+ }
+ // return callback button id
+ public function getCallbackId()
+ {
+     return $this->data['callback']['callback_id'];
+ }
+ // returns callback data i.e payload as they say
+ public function getCallbackPayload()
+ {
+     return $this->data['callback']['payload'];
+ }
+ /*
+  return update_type any one of these : 
+  "message_created","message_callback", "message_edited", "message_removed", "bot_added", "bot_removed", "user_added", "user_removed", "bot_started", "chat_title_changed"
+*/
+ public function getUpdateType()
+ {
+     return $this->data['update_type'];
+ }
+
+
+
+
+
+
+
+
+
+
+ 
+
 
 
 
