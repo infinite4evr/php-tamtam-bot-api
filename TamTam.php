@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 /**
- * TamTam Error Logger Class *
+ * TamTam Main Class *
  * @author Ashu (github.com/infinite4evr) <ggs.sudhanshu@gmail.com>
  */
 
