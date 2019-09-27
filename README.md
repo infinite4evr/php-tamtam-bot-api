@@ -61,7 +61,7 @@ $tamtam->setWebhook('https://mywebhook.com/mywebhook.php');
 //to delete webhook 
 $tamtam->deleteWebhook('https://mywebhook.com/mywebhook.php');
 //to check subscriptions 
-$tamtam->getSubscriptions);
+$tamtam->getSubscriptions());
 
 ```
 
@@ -80,8 +80,8 @@ $tamtam = new tamtam('YOUR tamtam TOKEN HERE');
 
 $result = $tamtam->getData();
 $text = $result['message']['body']['text'];
-$chatId = $result['message'] ['sender']['user_id'];
-$userId = array('user_id' => $userId, 'text' => 'Test');  // it can be any of user_id or chat_id
+$userId = $result['message'] ['sender']['user_id'];
+$content = array('user_id' => $userId, 'text' => 'Test');  // it can be any of user_id or chat_id
 $tamtam->sendMessage($content);
 ```
 
@@ -103,9 +103,10 @@ $req = $tamtam->getUpdates();
 
 for ($i = 0; $i < $tamtam-> UpdateCount(); $i++) {
 	// You NEED to call serveUpdate before accessing the values of message in tamtam Class
-	$tamtam->serveUpdate($i);
-	$text = $tamtam->Text();
-	$chat_id = $tamtam->ChatID();
+    $data = $req[$i];
+    $tamtam->setData($data);
+	$text = $tamtam->getText();
+	$chat_id = $tamtam->getChatID();
 
 	if ($text == '/start') {
 		$reply = 'Working';

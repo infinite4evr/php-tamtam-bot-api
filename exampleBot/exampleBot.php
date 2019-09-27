@@ -1,7 +1,11 @@
 <?php
+/**
+ * TamTam example bot @ExampleBot
+ * @author Ashu (github.com/infinite4evr) <ggs.sudhanshu@gmail.com>
+ */
 
 require_once(dirname(__FILE__).'/../TamTam.php');
-$bot = new TamTam('Bot token');
+$bot = new TamTam('bot token');
 
 $text = $bot->getMessageText();
 $user_id = $bot->getSenderUserId();
@@ -23,7 +27,7 @@ if($text == '/imageAttachment'){
     $bot->sendPhoto($content);
 }
 if($text == '/videoAttachment'){
-    $content = ['user_id' => $user_id, 'token' => 'BzMCDrcpTULSLdWeB4kfQXRqxci3QsQqmRWbNgGkg50', 'text' => 'videoAttachment'];
+    $content = ['user_id' => $user_id, 'video' => 'exampleBot/media/upload.mp4', 'text' => 'videoAttachment'];
     $bot->sendVideo($content);
 }
 if($text == '/fileAttachment'){

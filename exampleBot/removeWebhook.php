@@ -6,6 +6,4 @@ require_once(dirname(__FILE__).'/../TamTam.php');
 $bot = new TamTam('token');
 $bot->deleteWebhook('https://api.freeroid.com/');
 
-
-
 ?>

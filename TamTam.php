@@ -5,8 +5,8 @@
  */
     require_once('TamTamErrorLogger.php');
 
-//require_once(dirname(__FILE__).'/vendor/autoload.php');
-//use monolog\monolog;  //  not yet in use as of now
+require_once(dirname(__FILE__).'/vendor/autoload.php');
+use monolog\monolog;  //  not yet in use as of now
 
 class Tamtam
 {
@@ -865,16 +865,14 @@ class Tamtam
  {
      return $this->data['message']['recipient']['chat_id'];
  }
+
+ //todo
  public function getFile()
  {
      
  }
 
-
-
-
-
-
+ 
 
 }
 
