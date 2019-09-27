@@ -64,8 +64,6 @@ class Tamtam
               }             
           }
       }
-      print_r($url);
-      print_r($content);
       $reply = $this->callAPI($method,$url,$content);
       return json_decode($reply, true);
   }
