@@ -92,8 +92,8 @@ $img = '/path/to/file' ;  // relative path, if you're passing abolsolute path th
 $content = array('chat_id' => $chat_id, 'photo' => $img );
 $tamtam->sendPhoto($content);
 ```
-See update.php or update cowsay.php for the complete example.
-If you wanna see the CowSay Bot in action [add it](https://tamtam.me/cowmooobot).
+See exampleBot.php or update exampleBot.php for the complete example.
+If you wanna see the exampleBot in action [add it](https://tt.me/ExampleBot).
 
 If you want to use getUpdates instead of the WebHook you need to call the the  getUpdates() function inside a loop for cycle.
 ```php
