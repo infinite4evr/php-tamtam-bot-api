@@ -867,6 +867,10 @@ class Tamtam
  {
      return $this->data['message']['recipient']['chat_id'];
  }
+ public function getFile()
+ {
+     
+ }
 
 
 

@@ -1,15 +1,21 @@
 <?php
 
 require_once(dirname(__FILE__).'/../TamTam.php');
-$bot = new TamTam('Bot token');
+$bot = new TamTam('ZpW8TbSL3d_kU-Yh50LQn-45zrqY0JiiCPWnODVD1KY');
 
 $text = $bot->getMessageText();
 $user_id = $bot->getSenderUserId();
 $userName = $bot->getSenderName();
+print_r($bot->getUpdates());
 
 
 if($text == '/start'){    
     $content = ['user_id' => $user_id, 'text' => "Hi $userName, I am an example bot for PHP TamTam library <https://github.com/infinite4evr/php-tamtam-bot-api>, click /show to see a keybaord, Thank you"];
+    $bot->sendMessage($content);
+    return;
+}
+if($text == '/show'){    
+    $content = ['user_id' => $user_id, 'text' => "Hi $userName \n\nHere are my example commands you can test \n\n /imageAttachment \n /videoAttachment \n /fileAttachment \n /inlinekeyboard"];
     $bot->sendMessage($content);
     return;
 }
@@ -24,6 +30,10 @@ if($text == '/videoAttachment'){
 if($text == '/fileAttachment'){
     $content = ['user_id' => $user_id, 'file' => 'exampleBot/media/upload.json', 'text' => 'fileAttachment'];
     $bot->sendFile($content);
+}
+if($text == '/audioAttachment'){
+    $content = ['user_id' => $user_id, 'audio' => 'exampleBot/media/upload.mp3', 'text' => 'audioAttachment'];
+    $bot->sendAudio($content);
 }
 if($text == '/inlineKeyboard'){
     $callbackButton = $bot->buildCallbackButton('I am Callback Button', 'callback_data', 'positive');
