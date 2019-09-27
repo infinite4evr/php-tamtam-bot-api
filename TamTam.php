@@ -3,7 +3,9 @@
  * TamTam Main Class *
  * @author Ashu (github.com/infinite4evr) <ggs.sudhanshu@gmail.com>
  */
-    require_once('TamTamErrorLogger.php');
+if (file_exists('TamTamErrorLogger.php')) {
+    require_once 'TamTamErrorLogger.php';
+}
 
 require_once(dirname(__FILE__).'/vendor/autoload.php');
 use monolog\monolog;  //  not yet in use as of now
