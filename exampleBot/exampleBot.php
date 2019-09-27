@@ -14,7 +14,7 @@ if($text == '/start'){
     return;
 }
 if($text == '/show'){    
-    $content = ['user_id' => $user_id, 'text' => "Hi $userName \n\nHere are my example commands you can test \n\n /imageAttachment \n /videoAttachment \n /fileAttachment \n /inlinekeyboard"];
+    $content = ['user_id' => $user_id, 'text' => "Hi $userName \n\nHere are my example commands you can test \n\n /imageAttachment \n /videoAttachment \n /fileAttachment \n /inlineKeyboard"];
     $bot->sendMessage($content);
     return;
 }
