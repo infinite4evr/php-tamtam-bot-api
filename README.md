@@ -25,7 +25,7 @@ Download
 
 #### Using Composer
  
-* Uploading soon to packagist
+composer require infinite4evr/php-tamtam-bot-api
 
 #### Using Git
 
