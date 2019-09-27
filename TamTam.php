@@ -1,13 +1,12 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 /**
  * TamTam Main Class *
  * @author Ashu (github.com/infinite4evr) <ggs.sudhanshu@gmail.com>
  */
+    require_once('TamTamErrorLogger.php');
 
-require_once(dirname(__FILE__).'/vendor/autoload.php');
-use monolog\monolog;
+//require_once(dirname(__FILE__).'/vendor/autoload.php');
+//use monolog\monolog;  //  not yet in use as of now
 
 class Tamtam
 {
@@ -23,10 +22,15 @@ class Tamtam
   *  $bot_token  -> Bot Token
   *  $errorLogging -> Bool[T/F] ( have to log error or not ) Default = true
   */
-  public function __construct($bot_token, $errorLogging = true)
+  public function __construct($bot_token, $autoFetchData = true, $errorLogging = true)
   {
       $this->bot_token = $bot_token;
-      $this->$errorLogging = $errorLogging;
+      $this->errorLogging = $errorLogging;
+      if($autoFetchData == true){
+          $data = file_get_contents('php://input');
+          $this->data = json_decode($data, true);
+        
+      }
 
   }
   /**
@@ -60,6 +64,8 @@ class Tamtam
               }             
           }
       }
+      print_r($url);
+      print_r($content);
       $reply = $this->callAPI($method,$url,$content);
       return json_decode($reply, true);
   }
@@ -71,43 +77,43 @@ class Tamtam
     $url -> full url with endpoint concatenated
   */
 
-  private function callAPI($method, $url, $data)
+  private function callAPI($method, $url, $content)
   {
     $curl = curl_init();
-    $data = json_encode($data);
+    $content = json_encode($content);
     switch ($method){
        case "POST":
           curl_setopt($curl, CURLOPT_POST, 1);
-          if ($data)
-             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+          if ($content)
+             curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
           break;
        case "GET":
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-          if ($data)
-              curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
+          if ($content)
+              curl_setopt($curl, CURLOPT_POSTFIELDS, $content);			 					
           break;
        case "PUT":
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-          if ($data)
-             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
+          if ($content)
+             curl_setopt($curl, CURLOPT_POSTFIELDS, $content);			 					
           break;       
        case 'DELETE':
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
-          if ($data)
-             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
+          if ($content)
+             curl_setopt($curl, CURLOPT_POSTFIELDS, $content);			 					
           break;
        case 'PATCH':
           curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PATCH');
-          if ($data)
-             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);			 					
+          if ($content)
+             curl_setopt($curl, CURLOPT_POSTFIELDS, $content);			 					
           break;    
        default:
-          if ($data)
-             $url = sprintf("%s?%s", $url, http_build_query($data));
+          if ($content)
+             $url = sprintf("%s?%s", $url, http_build_query($content));
     }
     curl_setopt($curl, CURLOPT_HTTPHEADER, array(
         'Content-Type: application/json',
-        'Content-Length: ' . strlen($data))
+        'Content-Length: ' . strlen($content))
     );
  
     // OPTIONS:
@@ -118,8 +124,19 @@ class Tamtam
  
     // EXECUTE:
     $result = curl_exec($curl);
-    if(!$result){die("Connection Failure");}
+    if ($result === false) {
+        $result = json_encode(['ok'=>false, 'curl_error_code' => curl_errno($curl), 'curl_error' => curl_error($curl)]);
+    }
+    echo $result;
     curl_close($curl);
+    if ($this->errorLogging) {   
+        var_dump(class_exists('TamTamErrorLogger'));
+        if (class_exists('TamTamErrorLogger')) {
+            $content = json_decode($content,true);
+            $loggerArray = ($this->getData() == null) ? [$content] : [$this->getData(), $content];
+            TamTamErrorLogger::log(json_decode($result, true), $loggerArray);
+        }
+    }
     return $result;
  }
 
@@ -557,9 +574,9 @@ class Tamtam
      }
      $image_attach['photo'] = true;
      $image_attach = $this->getImageAttachment($image_attach); 
-     $message_content = ['chat_id' => $content['chat_id'], 'text'=> 'hello', 'attachments' => [$image_attach]];
-     print_r($message_content);
-     return $this->sendMessage($message_content);
+     unset($content['photo']);
+     $content['attachments'] = [$image_attach];
+     return $this->sendMessage($content);
  }
 
  public function sendVideo(array $content, bool $absolutePath = false)
@@ -575,8 +592,9 @@ class Tamtam
          $videoAttach['token'] = $content['token'];
      }
      $videoAttach = $this->getVideoAttachment($videoAttach); 
-     $message_content = ['chat_id' => $content['chat_id'], 'text'=> 'hello', 'attachments' => [$videoAttach]];
-     return $this->sendMessage($message_content);
+     unset($content['video']);
+     $content['attachments'] = [$videoAttach];
+     return $this->sendMessage($content);
 
  }
  public function sendAudio(array $content, bool $absolutePath = false)
@@ -592,8 +610,9 @@ class Tamtam
         $audioAttach['token'] = $content['token'];
     }
     $audioAttach = $this->getAudioAttachment($audioAttach); 
-    $message_content = ['chat_id' => $content['chat_id'], 'text'=> 'hello', 'attachments' => [$audioAttach]];
-    return $this->sendMessage($message_content);
+    unset($content['audio']);
+    $content['attachments'] = [$audioAttach];
+    return $this->sendMessage($content);
 
  }
  public function sendFile(array $content, bool $absolutePath = false)
@@ -609,8 +628,9 @@ class Tamtam
         $fileAttach['token'] = $content['token'];
     }
     $fileAttach = $this->getFileAttachment($fileAttach); 
-    $message_content = ['chat_id' => $content['chat_id'], 'text'=> 'hello', 'attachments' => [$fileAttach]];
-    return $this->sendMessage($message_content);
+    unset($content['file']);
+    $content['attachments'] = [$fileAttach];
+    return $this->sendMessage($content);
  }
 
  /*
@@ -637,7 +657,7 @@ class Tamtam
             $this->logError('$absolutePath only accepts bool value in class method upload(), pass either true or false');
         }        
     }else {
-        $path = dirname(__FILE__).'/test/'.$content['file'];
+        $path = dirname(__FILE__).'/'.$content['file'];
     }
     $cfile = new CURLFile($path);
     $cfile->mime = $cfile->getMimeType();
@@ -751,7 +771,7 @@ class Tamtam
 
  public function buildInlineKeyboard(array $buttons)
  {
-    $buttons = ['buttons' => array($buttons)];
+    $buttons = ['buttons' => $buttons];
      $inlineKeyboard = [
          'type' => 'inline_keyboard',
          'payload' => $buttons
@@ -831,10 +851,32 @@ class Tamtam
  {
      return $this->data['update_type'];
  }
+ public function UpdateCount()
+ {
+     return count($this->data['updates']);
+ }
+ public function getUserName()
+ {
+     return $this->data['message']['sender']['username'];
+ }
+ public function getSenderName()
+ {
+     return $this->data['message']['sender']['name'];
+ }
+ public function getChatId()
+ {
+     return $this->data['message']['recipient']['chat_id'];
+ }
+
+
+
+
 
 
 
 }
+
+
 
 
 

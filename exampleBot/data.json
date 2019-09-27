@@ -1,0 +1,21 @@
+{
+    "timestamp": 1569564845722,
+    "message": {
+      "sender": {
+        "user_id": 574207791461,
+        "name": "Ashu"
+      },
+      "recipient": {
+        "chat_id": 52367841374,
+        "chat_type": "dialog",
+        "user_id": 590561036603
+      },
+      "timestamp": 1569564845722,
+      "body": {
+        "mid": "SJlvbCueBoqF93HBhFUz8VkAQ53J-qcBq8BLbDucAys",
+        "seq": 102863001729264210,
+        "text": "/start"
+      }
+    },
+    "update_type": "message_created"
+  }

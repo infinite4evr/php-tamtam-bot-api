@@ -1,0 +1,424 @@
+============[Date]============
+[ 2019-09-27 10:24:36  Asia/Calcutta ] 
+==========[Response]==========
+code:		chat.denied
+message:		chat.send.msg.no.permission.generic
+=========[Sent Data]==========
+[ref]
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(131): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(64): Tamtam->callAPI('POST', 'https://botapi....', '{"text":"hello"...')
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(384): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/test/test.php(38): Tamtam->sendMessage(Array)
+#4 {main}
+
+============[Date]============
+[ 2019-09-27 10:29:23  Asia/Calcutta ] 
+==========[Response]==========
+code:		chat.denied
+message:		chat.send.msg.no.permission.generic
+=========[Sent Data]==========
+[ref]
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(131): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(64): Tamtam->callAPI('POST', 'https://botapi....', '{"text":"hello"...')
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(384): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/test/test.php(38): Tamtam->sendMessage(Array)
+#4 {main}
+
+============[Date]============
+[ 2019-09-27 10:29:47  Asia/Calcutta ] 
+==========[Response]==========
+code:		chat.denied
+message:		chat.send.msg.no.permission.generic
+=========[Sent Data]==========
+[ref]
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(131): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(64): Tamtam->callAPI('POST', 'https://botapi....', '{"text":"hello"...')
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(384): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/test/test.php(38): Tamtam->sendMessage(Array)
+#4 {main}
+
+============[Date]============
+[ 2019-09-27 10:30:38  Asia/Calcutta ] 
+==========[Response]==========
+code:		chat.denied
+message:		chat.send.msg.no.permission.generic
+=========[Sent Data]==========
+[ref]
+ref.text= hello
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(132): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(64): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(385): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/test/test.php(38): Tamtam->sendMessage(Array)
+#4 {main}
+
+============[Date]============
+[ 2019-09-27 12:46:40  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		attachments[0].payload: must not be null
+=========[Sent Data]==========
+[ref]
+ref.chat_id= 
+ref.text= hello
+ref.attachments.0.type= image
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(577): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 12:47:04  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		attachments[0].payload: must not be null
+=========[Sent Data]==========
+[ref]
+ref.chat_id= 
+ref.text= hello
+ref.attachments.0.type= image
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(577): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 12:47:20  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		attachments[0].payload: must not be null
+=========[Sent Data]==========
+[ref]
+ref.text= hello
+ref.attachments.0.type= image
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(577): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 12:48:57  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		attachments[0].payload: must not be null
+=========[Sent Data]==========
+[ref]
+ref.text= hello
+ref.attachments.0.type= image
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(577): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 12:49:13  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		attachments[0].payload: must not be null
+=========[Sent Data]==========
+[ref]
+ref.text= hello
+ref.attachments.0.type= image
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(577): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 12:49:59  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		attachments[0].payload: must not be null
+=========[Sent Data]==========
+[ref]
+ref.text= hello
+ref.attachments.0.type= image
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(577): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 12:51:03  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		attachments[0].payload: must not be null
+=========[Sent Data]==========
+[ref]
+ref.text= hello
+ref.attachments.0.type= image
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(577): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 12:52:20  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		attachments[0].payload: must not be null
+=========[Sent Data]==========
+[ref]
+ref.text= hello
+ref.attachments.0.type= image
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(577): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 12:59:14  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		Invalid JSON
+=========[Sent Data]==========
+[ref]
+ref.text= imageAttachment
+ref.attachments.type= image
+ref.attachments.payload.photos.aaxRtSgwp5nEJoAVep9RTdPflnnEIhDz52boM0TC9K7XSeNVr7LNtg==.token= R3cxxdIRskqZKhHo+pArRjnr8dRI2Gg6g3JKEC9nm6LGos+Qo0ndV+WJyeLmeWsWYakVCp/MWIh5wCB2ESVqjSxAa52ZmjYnHV8R3UYdv7cCpP1dLaWQeX/1qJCf1TO6
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(578): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 13:01:37  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		Invalid JSON
+=========[Sent Data]==========
+[ref]
+ref.text= imageAttachment
+ref.attachments.type= image
+ref.attachments.payload.photos.jxs8cZetB/CxnrD+c8ks4lXwm9jNvi32idcDm+t3BxX+5K+G2ZmqNg==.token= b0A65olWmKJ2aDihQX8Jy1j+2zvOgMktCzjOffhC325c/mDeCXmhcB77KmgIs3tj5ffHRisN8wrV40HkmZBTD5B6GB7VSBXRx7zOSI+pd67OBo32dz1vvWq1GBILBq0q
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(135): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(67): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(388): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(578): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 13:04:51  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		Invalid JSON
+=========[Sent Data]==========
+[ref]
+ref.text= imageAttachment
+ref.attachments.type= image
+ref.attachments.payload.photos.p4ClP0hkh+0r+cmUrutxoU0S/n1txvWBDuiH7649j3+woUFL/Ei7ug==.token= VJkQzVdWxEBxNWT5fF10z7CRq7aAFzRnvEsLXBPnRV/GOFrcflAAlKUyu1zQl7kQyG1O/yuqEueG2cQsKXHM9rhFSJdDICl1p6nFOo0ohvLb9S/cO6qWIluD0rb/D3xJ
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(137): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(69): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(390): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(580): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(24): Tamtam->sendPhoto(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 13:15:55  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		Invalid JSON
+=========[Sent Data]==========
+[ref]
+ref.text= videoAttachment
+ref.attachments.0.type= video
+ref.attachments.0.payload.token.message= Unsupported file formats
+ref.attachments.0.payload.token.code= upload.error
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(137): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(69): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(390): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(597): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(28): Tamtam->sendVideo(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 13:17:01  Asia/Calcutta ] 
+==========[Response]==========
+code:		attachment.not.ready
+message:		Key: errors.process.attachment.video.not.processed
+=========[Sent Data]==========
+[ref]
+ref.text= videoAttachment
+ref.attachments.0.type= video
+ref.attachments.0.payload.token= BzMCDrcpTULSLdWeB4kfQXRqxci3QsQqmRWbNgGkg50
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(137): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(69): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(390): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(597): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(28): Tamtam->sendVideo(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 13:18:12  Asia/Calcutta ] 
+==========[Response]==========
+code:		internal.error
+message:		Error ID: 4be523580af57dd3
+=========[Sent Data]==========
+[ref]
+ref.text= fileAttachment
+ref.attachments.0.type= file
+ref.attachments.0.payload.token= 
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(137): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(69): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(390): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(633): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(32): Tamtam->sendFile(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 13:18:40  Asia/Calcutta ] 
+==========[Response]==========
+code:		internal.error
+message:		Error ID: 67fe4b032b9e23a2
+=========[Sent Data]==========
+[ref]
+ref.text= fileAttachment
+ref.attachments.0.type= file
+ref.attachments.0.payload.token= 
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(137): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(69): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(390): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/TamTam.php(633): Tamtam->sendMessage(Array)
+#4 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(32): Tamtam->sendFile(Array)
+#5 {main}
+
+============[Date]============
+[ 2019-09-27 13:28:26  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		Unknown recipient
+=========[Sent Data]==========
+[ref]
+ref.text= All Inline Buttons
+ref.attachments.0.type= inline_keyboard
+ref.attachments.0.payload.buttons.0.0.type= callback
+ref.attachments.0.payload.buttons.0.0.text= I am Callback Button
+ref.attachments.0.payload.buttons.0.0.payload= callback_data
+ref.attachments.0.payload.buttons.0.0.intent= positive
+ref.attachments.0.payload.buttons.0.1.type= link
+ref.attachments.0.payload.buttons.0.1.text= I am link
+ref.attachments.0.payload.buttons.0.1.url= https://infinite4evr.com
+ref.attachments.0.payload.buttons.0.2.type= callback
+ref.attachments.0.payload.buttons.0.2.text= I am Callback Button
+ref.attachments.0.payload.buttons.0.2.payload= callback_data
+ref.attachments.0.payload.buttons.0.2.intent= positive
+ref.attachments.0.payload.buttons.0.3.type= request_geo_location
+ref.attachments.0.payload.buttons.0.3.text= I am geo Request
+ref.attachments.0.payload.buttons.0.3.quick= false
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(137): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(69): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(390): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(41): Tamtam->sendMessage(Array)
+#4 {main}
+
+============[Date]============
+[ 2019-09-27 13:29:42  Asia/Calcutta ] 
+==========[Response]==========
+code:		proto.payload
+message:		Invalid JSON
+=========[Sent Data]==========
+[ref]
+ref.text= All Inline Buttons
+ref.attachments.0.type= inline_keyboard
+ref.attachments.0.payload.buttons.0.type= callback
+ref.attachments.0.payload.buttons.0.text= I am Callback Button
+ref.attachments.0.payload.buttons.0.payload= callback_data
+ref.attachments.0.payload.buttons.0.intent= positive
+ref.attachments.0.payload.buttons.1.type= link
+ref.attachments.0.payload.buttons.1.text= I am link
+ref.attachments.0.payload.buttons.1.url= https://infinite4evr.com
+ref.attachments.0.payload.buttons.2.type= callback
+ref.attachments.0.payload.buttons.2.text= I am Callback Button
+ref.attachments.0.payload.buttons.2.payload= callback_data
+ref.attachments.0.payload.buttons.2.intent= positive
+ref.attachments.0.payload.buttons.3.type= request_geo_location
+ref.attachments.0.payload.buttons.3.text= I am geo Request
+ref.attachments.0.payload.buttons.3.quick= false
+
+
+============[Trace]===========
+#0 /var/www/html/php-tamtam-bot-api/TamTam.php(137): TamTamErrorLogger::log(Array, Array)
+#1 /var/www/html/php-tamtam-bot-api/TamTam.php(69): Tamtam->callAPI('POST', 'https://botapi....', Array)
+#2 /var/www/html/php-tamtam-bot-api/TamTam.php(390): Tamtam->endpoint('messages', Array, 'POST', Array)
+#3 /var/www/html/php-tamtam-bot-api/exampleBot/exampleBot.php(41): Tamtam->sendMessage(Array)
+#4 {main}
+
