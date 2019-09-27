@@ -1,5 +1,7 @@
 # PHP-TamTam-Bot-Api
 [![CodeFactor](https://www.codefactor.io/repository/github/infinite4evr/php-tamtam-bot-api/badge)](https://www.codefactor.io/repository/github/infinite4evr/php-tamtam-bot-api)
+![PHP](https://img.shields.io/badge/php-%3E%3D5.3-8892bf.svg)
+![CURL](https://img.shields.io/badge/cURL-required-green.svg)
 
 A very simple PHP [TamTam Bot API](https://dev.tamtam.chat).    
 Compliant with the Sep 2019, 2019 tamtam Bot API update.
