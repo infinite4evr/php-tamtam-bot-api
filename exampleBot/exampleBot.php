@@ -1,7 +1,7 @@
 <?php
 
 require_once(dirname(__FILE__).'/../TamTam.php');
-$bot = new TamTam('ZpW8TbSL3d_kU-Yh50LQn-45zrqY0JiiCPWnODVD1KY');
+$bot = new TamTam('Bot token');
 
 $text = $bot->getMessageText();
 $user_id = $bot->getSenderUserId();
