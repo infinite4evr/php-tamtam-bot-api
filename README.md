@@ -4,7 +4,7 @@
 ![CURL](https://img.shields.io/badge/cURL-required-green.svg)
 
 A very simple PHP [TamTam Bot API](https://dev.tamtam.chat).    
-Compliant with the Sep 2019, 2019 tamtam Bot API update.
+Compliant with the Sep,2019 tamtam Bot API update.
 
 
 A working example bot is available to test at [@ExampleBot](https://tt.me/ExampleBot)
