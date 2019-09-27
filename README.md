@@ -46,10 +46,21 @@ Note: To enable error log file, also copy TamTamErrorLogger.php in the same dire
 
 Configuration (WebHook)
 ---------
-Use the tamtam class setWebhook() method
+Use the tamtam class setWebhook('url) method
 
 Examples
 ---------
+
+```php
+$tamtam = new tamtam('YOUR tamtam TOKEN HERE');
+$tamtam->setWebhook('https://mywebhook.com/mywebhook.php');
+//to delete webhook 
+$tamtam->deleteWebhook('https://mywebhook.com/mywebhook.php');
+//to check subscriptions 
+$tamtam->getSubscriptions);
+
+```
+
 
 ```php
 $tamtam = new tamtam('YOUR tamtam TOKEN HERE');
