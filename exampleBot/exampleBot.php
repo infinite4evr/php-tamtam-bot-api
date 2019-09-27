@@ -6,7 +6,6 @@ $bot = new TamTam('Bot token');
 $text = $bot->getMessageText();
 $user_id = $bot->getSenderUserId();
 $userName = $bot->getSenderName();
-print_r($bot->getUpdates());
 
 
 if($text == '/start'){    
