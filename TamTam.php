@@ -650,9 +650,9 @@ class Tamtam
 
  public function upload($uploadUrl, array $content, bool $absolutePath = false)
  {
-    if($absolutePath!=false){    
-        if($absolutePath==true){
-            
+    if($absolutePath != false){    
+        if($absolutePath == true){
+            $path = $content['file'];            
         }else{
             $this->logError('$absolutePath only accepts bool value in class method upload(), pass either true or false');
         }        
@@ -868,7 +868,6 @@ class Tamtam
      return $this->data['message']['recipient']['chat_id'];
  }
 
- //todo
  public function getFile()
  {
      
