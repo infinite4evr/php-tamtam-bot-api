@@ -24,8 +24,9 @@ Download
 ---------
 
 #### Using Composer
- 
+```
 composer require infinite4evr/php-tamtam-bot-api
+```
 
 #### Using Git
 
