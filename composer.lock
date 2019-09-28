@@ -4,69 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "502060e343d896ac930b7ea65601935f",
+    "content-hash": "b06bd29b159a927fbc8386be6c2ab001",
     "packages": [
         {
-            "name": "infinite4evr/php-tamtam-bot-api",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/infinite4evr/php-tamtam-bot-api.git",
-                "reference": "f6a37ef311c871658e5743c67a1c36b449b7cda1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/infinite4evr/php-tamtam-bot-api/zipball/f6a37ef311c871658e5743c67a1c36b449b7cda1",
-                "reference": "f6a37ef311c871658e5743c67a1c36b449b7cda1",
-                "shasum": ""
-            },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-                "monolog/monolog": "2.*",
-                "php": "^5.5|^7.0"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "TamTam.php",
-                    "TamTamErrorLogger.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ashu",
-                    "email": "ggs.sudhanshu@gmail.com",
-                    "homepage": "https://infinite4evr.com",
-                    "role": "Not sure yet"
-                }
-            ],
-            "description": "Api Library for TamTam Bot Api",
-            "homepage": "https://github.com/infinite4evr/php-tamtam-bot-api",
-            "keywords": [
-                "api",
-                "bot",
-                "php",
-                "tamtam"
-            ],
-            "time": "2019-09-27T18:45:44+00:00"
-        },
-        {
             "name": "monolog/monolog",
-            "version": "dev-master",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "6d51b319796e6391139932f78fb76a144a867b57"
+                "reference": "68545165e19249013afd1d6f7485aecff07a2d22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/6d51b319796e6391139932f78fb76a144a867b57",
-                "reference": "6d51b319796e6391139932f78fb76a144a867b57",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/68545165e19249013afd1d6f7485aecff07a2d22",
+                "reference": "68545165e19249013afd1d6f7485aecff07a2d22",
                 "shasum": ""
             },
             "require": {
@@ -134,20 +85,20 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2019-09-17T07:44:07+00:00"
+            "time": "2019-08-30T09:56:44+00:00"
         },
         {
             "name": "psr/log",
-            "version": "dev-master",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "c4421fcac1edd5a324fda73e589a5cf96e52ffd0"
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/c4421fcac1edd5a324fda73e589a5cf96e52ffd0",
-                "reference": "c4421fcac1edd5a324fda73e589a5cf96e52ffd0",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
+                "reference": "6c001f1daafa3a3ac1d8ff69ee4db8e799a654dd",
                 "shasum": ""
             },
             "require": {
@@ -156,7 +107,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.0.x-dev"
                 }
             },
             "autoload": {
@@ -181,12 +132,12 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2018-11-21T13:42:00+00:00"
+            "time": "2018-11-20T15:27:04+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
