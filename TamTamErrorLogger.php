@@ -1,6 +1,6 @@
 <?php
 /**
- * TamTam Error Logger Class.
+ * TamTam Error Logger Class
  *
  * @author Ashu (github.com/infinite4evr) <ggs.sudhanshu@gmail.com>
  * Thanks to shakibonline <shakiba_9@yahoo.com> for serving as a reference for me to make this class 
