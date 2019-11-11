@@ -549,7 +549,7 @@ class Tamtam
  }
 
 /*
- Description : Upload attachments using this function , sendPhoto, sendVideo, sendAudio, sendFile
+ Description : Upload attachments using these functions , sendPhoto, sendVideo, sendAudio, sendFile
  parameters of :
     $content 
         Name         |   Type     | Required/Optional
@@ -560,6 +560,8 @@ class Tamtam
         absolutePath |   bool     | optiona     // default = false //pass when you are sending abolsute path from root 
 
  Each of the below give functions will return the token of the uploaded file if upload was succesfull or return false
+  
+ Returns either the token of the file uploaded if it is not processed yet at the time of request or returns the reponse
  */
  
  public function sendPhoto(array $content, bool $absolutePath = false)
@@ -576,7 +578,7 @@ class Tamtam
      $image_attach = $this->getImageAttachment($image_attach); 
      unset($content['photo']);
      $content['attachments'] = [$image_attach];
-     return $this->sendMessage($content);
+     return $this->checkForError($this->sendMessage($content), $token);
  }
 
  public function sendVideo(array $content, bool $absolutePath = false)
@@ -594,7 +596,7 @@ class Tamtam
      $videoAttach = $this->getVideoAttachment($videoAttach); 
      unset($content['video']);
      $content['attachments'] = [$videoAttach];
-     return $this->sendMessage($content);
+     return $this->checkForError($this->sendMessage($content), $token);
 
  }
  public function sendAudio(array $content, bool $absolutePath = false)
@@ -612,7 +614,7 @@ class Tamtam
     $audioAttach = $this->getAudioAttachment($audioAttach); 
     unset($content['audio']);
     $content['attachments'] = [$audioAttach];
-    return $this->sendMessage($content);
+    return $this->checkForError($this->sendMessage($content), $token);
 
  }
  public function sendFile(array $content, bool $absolutePath = false)
@@ -630,7 +632,7 @@ class Tamtam
     $fileAttach = $this->getFileAttachment($fileAttach); 
     unset($content['file']);
     $content['attachments'] = [$fileAttach];
-    return $this->sendMessage($content);
+    return $this->checkForError($this->sendMessage($content), $token);
  }
 
  /*
@@ -824,7 +826,8 @@ class Tamtam
  {
     return $this->data['message']['body']['text'];
  }
- // return getRecipientId if any exists
+  // return getRecipientId if any exists
+ 
  public function getRecipientId()
  {
      if(isset($this->data['message']['recipient']['chat_id'])){
@@ -873,36 +876,23 @@ class Tamtam
      
  }
 
+ /**
+  * checks for error in response for the functions sendPhoto, sendFile, sendVideo, sendAudio
+  * Server takes time to process uploads hence it may return a not yet processed error
+  * Returns the token of file uploaded but not yet processed
+  * file here means photo, video, audio, file
+  * if response is successfull the returns the reponse itself 
+ */
+
+ public function checkForError($response, $token){
+     if(isset($response['code']) && isset($response['message'])){
+         return $token;
+     } else {
+         return $response;
+     }     
+ }
  
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-       
-            
-
-    
-
-
-  
-
-   
-
-
+//class end
