@@ -31,7 +31,7 @@ if($text == '/videoAttachment'){
     $bot->sendVideo($content);
 }
 if($text == '/fileAttachment'){
-    $content = ['user_id' => $user_id, 'file' => 'exampleBot/media/upload.json', 'text' => 'fileAttachment'];
+    $content = ['user_id' => $user_id, 'file' => 'exampleBot/media/file.txt', 'text' => 'fileAttachment'];
     $bot->sendFile($content);
 }
 if($text == '/audioAttachment'){
