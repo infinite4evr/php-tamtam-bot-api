@@ -22,6 +22,10 @@ if($text == '/show'){
     $bot->sendMessage($content);
     return;
 }
+
+// Thsese functions return a token if server responds that file is not yet processed
+// You are required to save those file tokens for further use
+
 if($text == '/imageAttachment'){
     $content = ['user_id' => $user_id, 'photo' => 'exampleBot/media/upload.jpeg', 'text' => 'imageAttachment'];
     $bot->sendPhoto($content);
