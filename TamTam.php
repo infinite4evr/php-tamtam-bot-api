@@ -666,6 +666,7 @@ class Tamtam
     $post = array(
         'file' => $cfile,
     );
+    var_dump($post);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $uploadUrl);
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -677,7 +678,6 @@ class Tamtam
     curl_setopt($ch, CURLOPT_TIMEOUT, 100);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
     $result = curl_exec($ch);
-    print_r($result);
     $result = json_decode($result, true);
     
     if(isset($result['token'])){
