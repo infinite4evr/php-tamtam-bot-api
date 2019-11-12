@@ -5,12 +5,11 @@
  */
 
 require_once(dirname(__FILE__).'/../TamTam.php');
-$bot = new TamTam('bot token');
+$bot = new TamTam('token');
 
 $text = $bot->getMessageText();
 $user_id = $bot->getSenderUserId();
 $userName = $bot->getSenderName();
-
 
 if($text == '/start'){    
     $content = ['user_id' => $user_id, 'text' => "Hi $userName, I am an example bot for PHP TamTam library <https://github.com/infinite4evr/php-tamtam-bot-api>, click /show to see a keybaord, Thank you"];
@@ -27,19 +26,23 @@ if($text == '/show'){
 // You are required to save those file tokens for further use
 
 if($text == '/imageAttachment'){
-    $content = ['user_id' => $user_id, 'photo' => 'exampleBot/media/upload.jpeg', 'text' => 'imageAttachment'];
+    $content = ['user_id' => $user_id, 'photo' => 'example/media/upload.jpeg', 'text' => 'imageAttachment'];
     $bot->sendPhoto($content);
 }
 if($text == '/videoAttachment'){
-    $content = ['user_id' => $user_id, 'video' => 'exampleBot/media/upload.mp4', 'text' => 'videoAttachment'];
+    $content = ['user_id' => $user_id, 'video' => 'example/media/upload.mp4', 'text' => 'videoAttachment'];
     $bot->sendVideo($content);
 }
 if($text == '/fileAttachment'){
-    $content = ['user_id' => $user_id, 'file' => 'exampleBot/media/file.txt', 'text' => 'fileAttachment'];
-    $bot->sendFile($content);
+    $content = ['user_id' => $user_id, 'file' => 'example/media/file.txt', 'text' => 'fileAttachment'];
+    // this will return a token if very large file else returns the successfull response 
+    $response = $bot->sendFile($content); 
+    if(isset($response['token']){
+       echo $response['token']; //save token for retrying again ( db )
+    }   
 }
 if($text == '/audioAttachment'){
-    $content = ['user_id' => $user_id, 'audio' => 'exampleBot/media/upload.mp3', 'text' => 'audioAttachment'];
+    $content = ['user_id' => $user_id, 'audio' => 'example/media/upload.mp3', 'text' => 'audioAttachment'];
     $bot->sendAudio($content);
 }
 if($text == '/inlineKeyboard'){
