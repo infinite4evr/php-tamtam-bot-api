@@ -20,8 +20,5 @@
          "ext-curl": "*",
          "ext-json": "*"
 
-    },
-     "autoload": {
-        "files": ["TamTam.php", "TamTamErrorLogger.php"]
     }
 }
