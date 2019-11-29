@@ -37,7 +37,7 @@ if($text == '/fileAttachment'){
     $content = ['user_id' => $user_id, 'file' => 'example/media/file.txt', 'text' => 'fileAttachment'];
     // this will return a token if very large file else returns the successfull response 
     $response = $bot->sendFile($content); 
-    if(isset($response['token']){
+    if(isset($response['token'])){
        echo $response['token']; //save token for retrying again ( db )
     }   
 }

@@ -1,21 +1,17 @@
 <?php
 /**
- * TamTam Main Class *
- * @author Ashu (github.com/infinite4evr) <ggs.sudhanshu@gmail.com>
+ * TamTam Main Api Class*
+ * @author Ashu <ggs.sudhanshu@gmail.com> (github.com/infinite4evr) 
  */
 if (file_exists('TamTamErrorLogger.php')) {
     require_once 'TamTamErrorLogger.php';
 }
-
-require_once(dirname(__FILE__).'/vendor/autoload.php');
-use monolog\monolog;  //  not yet in use as of now
 
 class Tamtam
 {
 
   public $apiDomain = 'botapi.tamtam.chat';
   private $bot_token = '';
-  private $updates = [];
   private $data = [];
   private $errorLogging;
 
@@ -79,6 +75,33 @@ class Tamtam
 
   private function callAPI($method, $url, $content)
   {
+    $curl = $this->configCurl($method, $content);     
+    // EXECUTE:
+    $result = curl_exec($curl);
+    if ($result === false) {
+        $result = json_encode(['ok'=>false, 'curl_error_code' => curl_errno($curl), 'curl_error' => curl_error($curl)]);
+    }
+    echo $result;
+    curl_close($curl);
+    if ($this->errorLogging) {   
+        var_dump(class_exists('TamTamErrorLogger'));
+        if (class_exists('TamTamErrorLogger')) {
+            $content = json_decode($content,true);
+            $loggerArray = ($this->getData() == null) ? [$content] : [$this->getData(), $content];
+            TamTamErrorLogger::log(json_decode($result, true), $loggerArray);
+        }
+    }
+    return $result;
+ }
+ /**
+  * configures curl for proper content and headers
+  *
+  * @param string $method
+  * @param array $content
+  * @return object curl object
+  */
+ public function configCurl($method, $content)
+ {
     $curl = curl_init();
     $content = json_encode($content);
     switch ($method){
@@ -121,24 +144,9 @@ class Tamtam
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
- 
-    // EXECUTE:
-    $result = curl_exec($curl);
-    if ($result === false) {
-        $result = json_encode(['ok'=>false, 'curl_error_code' => curl_errno($curl), 'curl_error' => curl_error($curl)]);
-    }
-    echo $result;
-    curl_close($curl);
-    if ($this->errorLogging) {   
-        var_dump(class_exists('TamTamErrorLogger'));
-        if (class_exists('TamTamErrorLogger')) {
-            $content = json_decode($content,true);
-            $loggerArray = ($this->getData() == null) ? [$content] : [$this->getData(), $content];
-            TamTamErrorLogger::log(json_decode($result, true), $loggerArray);
-        }
-    }
-    return $result;
+    return $curl;
  }
+
 
 ## MOST OF THE METHODS OF THE LIBRARY BEGINS FROM HERE ##
 
@@ -890,8 +898,7 @@ class Tamtam
      } else {
          return $response;
      }     
- }
- 
+ } 
 
 }
 
