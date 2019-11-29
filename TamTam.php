@@ -75,7 +75,7 @@ class Tamtam
 
   private function callAPI($method, $url, $content)
   {
-    $curl = $this->configCurl($method, $content);     
+    $curl = $this->configCurl($method, $content, $url);     
     // EXECUTE:
     $result = curl_exec($curl);
     if ($result === false) {
@@ -100,7 +100,7 @@ class Tamtam
   * @param array $content
   * @return object curl object
   */
- public function configCurl($method, $content)
+ public function configCurl($method, $content, $url)
  {
     $curl = curl_init();
     $content = json_encode($content);
